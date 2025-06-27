@@ -62,6 +62,25 @@ A CCCP document in intermediate form consists of:
 cat dog keyboard lion
 ```
 
+**LUT Used For Substitution**
+
+Assume that this is the LUT of the vendor KNOLBAY for the below Encoded IR:
+
+```json
+{
+  "lut": "zoo",
+  "vendor": "KNOLBAY",
+  "version": "1.0",
+  "bit_width": 2,
+  "lut": {
+    " ": "00",
+    "cat": "01",
+    "dog": "10",
+    "lion": "11"
+  }
+}
+```
+
 **Encoded IR:**
 
 ```json
