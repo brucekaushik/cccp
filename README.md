@@ -72,7 +72,7 @@ Assume that this is the LUT of the vendor KNOLBAY for the below Encoded IR:
   "vendor": "KNOLBAY",
   "version": "1.0",
   "bit_width": 2,
-  "lut": {
+  "map": {
     " ": "00",
     "cat": "01",
     "dog": "10",
