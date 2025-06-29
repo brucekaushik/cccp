@@ -37,12 +37,13 @@ A CCCP document in intermediate form consists of:
   "version": "0.2",
   "headers": {
     "H1": "EXCLUDE",
-    "H2": "LUT:KNOLBAY:zoo@1.0"
+    "H2": "NEWLINE",
+    "H3": "LUT:Knolbay:Zoo@1.0.0"
   },
   "segments": [
-    ["H2", "010010"],
+    ["H3", "010010"],
     ["H1", "keyboard"],
-    ["H2", "11"]
+    ["H3", "11"]
   ]
 }
 ```
@@ -64,12 +65,12 @@ cat dog keyboard lion
 
 **LUT Used For Substitution**
 
-Assume that this is the LUT of the vendor KNOLBAY for the below Encoded IR:
+Assume that this is the LUT of the vendor Knolbay for the below Encoded IR:
 
 ```json
 {
-  "lut": "zoo",
-  "vendor": "KNOLBAY",
+  "lut": "Zoo",
+  "vendor": "Knolbay",
   "version": "1.0",
   "bit_width": 2,
   "map": {
@@ -88,12 +89,13 @@ Assume that this is the LUT of the vendor KNOLBAY for the below Encoded IR:
   "version": "0.2",
   "headers": {
     "H1": "EXCLUDE",
-    "H2": "LUT:KNOLBAY:zoo@1.0"
+    "H2": "NEWLINE",
+    "H3": "LUT:Knolbay:Zoo@1.0.0"
   },
   "segments": [
-    ["H2", "010010"],   // 'cat', 'dog'
+    ["H3", "010010"],   // 'cat', 'dog'
     ["H1", "keyboard"], // not encoded
-    ["H2", "11"]         // 'lion'
+    ["H3", "11"]         // 'lion'
   ]
 }
 ```
@@ -112,13 +114,13 @@ CCCPv0.2H2:010010H1:keyboardH2:11
 ## 🌍 Use Cases
 
 * Text compression (using domain-specific LUTs)
-* Language switching (e.g., `LUT:CCCP:dialogue.telugu@1.0`)
-* Game assets (e.g., `LUT:KNOLBAY:encode-tileset@1.0`)
+* Language switching (e.g., `LUT:Cccp:DialogTelugu@1.0.0`)
+* Game assets (e.g., `LUT:Knolbay:EncodeTileset@1.0.0`)
 * Embedded devices (sensor logs with shared LUTs)
 * Network protocols (compact domain-specific payloads)
 * Mixed-data archiving with LUT-switching and fallback zones
-* Image compression using vendor-defined functions and tile-based optimization (e.g., `LUT:KNOLBAY:encode-sprite-map@2.1`)
-* Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `LUT:CCCP:latin@1.0`)
+* Image compression using vendor-defined functions and tile-based optimization (e.g., `LUT:Knolbay:EncodeSpriteMap@2.1.1`)
+* Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `LUT:Cccp:DialogLatin@1.0.0`)
 * Archival storage — layer CCCP IR before binary packing for long-term interpretable storage of logs, telemetry, and structured content
 * AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., LUT:CCCP:dialogue.telugu@1.0)
 * Code compression and syntax normalization (e.g., LUTs for frequent code patterns like `public static`, `console.log`, etc.)
