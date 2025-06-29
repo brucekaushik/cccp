@@ -129,41 +129,31 @@ CCCPv0.2H2:010010H1:keyboardH2:11
 * Telemetry streams or mobile analytics (minify repeated log events like `button_click`, `page_view`)
 * Compiler or AST preprocessing pipelines (use CCCP IR for token stream transforms)
 
+## Specification Index
 
+This section is evolving and may be incomplete. It indexes CCCP protocol documents by subsystem (Encoder, Decoder, etc.) and type ([rule], [reasoning], etc.).
 
-## 🔧 Why Arrays for Segments?
+> Each item is tagged by type for clarity:
+> - (**rule**) – Must-follow protocol rules.
+> - (**reasoning**) – Design rationale or encoding logic.
+> - (**note**) – Clarifications or exceptions.
+> - (**example**) – Annotated samples or usage cases.
+> - (**implementation**) – How to write code to follow the spec
 
-Using a list for `segments` instead of an object allows:
+- **Encoder**
+  * 🧾 [New Line Handling (**rule**)](spec/RULES.md#handling-of-newlines-during-ir-encoding)
+  * 💭 [New Line Handling (**reasoning**)](spec/REASONING.md#reasoning-handling-of-newlines-during-ir-encoding)
+  * *(more items coming soon)*
 
-* Order preservation
-* Duplicate header usage
-* Easy replacement or transformation of individual entries
-* Seamless pluggability for vendor pipelines
+- **Decoder**
+  * 🛠️ [Segment Decoding Logic (**implementation**)](spec/IMPLEMENTATION.md#segment-decoding-logic-during-ir-decoding)
+  * *(more items coming soon)*
 
-## 🔄 Decoder Behavior
-
-1. Load and parse the `headers` table.
-2. For each `[HeaderRef, Payload]` in `segments`:
-
-   * Match `HeaderRef` (e.g., `H2`) to a transformation spec (e.g., `LUT:KNOLBAY:zoo@1.0`)
-   * Decode using the vendor-defined LUT or function.
-   * If the header is unknown or the payload is uninterpretable:
-
-     * Fallback to passthrough (raw value retained as-is).
-
-## 🔐 Versioning and Vendorization
-
-Each LUT or function reference must be **namespaced and versioned** for clarity, safety, and interoperability.
-
-- **Vendor**: Identifies the source (e.g., `CCCP`, `Knolbay`)
-- **Name**: The LUT or function name (e.g., `zoo`, `dialogue.telugu`, `encode-tileset`)
-- **Version**: Semantic versioning (`@1.0`, `@2.3.1`)
-
-This structure enables:
-- Safe upgrades and migration paths
-- Explicit dependency resolution
-- Distributed plugin ecosystems
-- Clear failure modes during decoding
+- **IR (Intermediate Representation)**
+  * 💭 [Why Arrays for IR Segments? (**reasoning**)](spec/REASONING.md#why-arrays-for-ir-segments)
+  * 🧾 [IR Header Format (**rule**)](spec/RULES.md#ir-header-formats)
+  * 💭 [Rationale for Header Format Design (**reasoning**)](spec/REASONING.md#rationale-for-header-format-design)
+  * *(more items coming soon)*
 
 ## 🔌 Future Direction
 
