@@ -113,6 +113,8 @@ CCCPv0.2H2:010010H1:keyboardH2:11
 
 ## 🌍 Use Cases
 
+> Note: The use cases listed below are tentative and need to be re-evaluated and validated through proof-of-concepts (POCs). For now, they represent plausible directions based on current reasoning.
+
 * Text compression (using domain-specific LUTs)
 * Language switching (e.g., `LUT:Cccp:DialogTelugu@1.0.0`)
 * Game assets (e.g., `LUT:Knolbay:EncodeTileset@1.0.0`)
