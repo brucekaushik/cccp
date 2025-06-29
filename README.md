@@ -10,6 +10,8 @@
 
 > CCCP is not just a codec — it's a programmable, stage-based protocol for partial or full transformation of data into compact, structured forms.
 
+🧬 [Read Origin Story](ORIGIN_STORY.md)
+
 ## 💡 Core Concepts
 
 ### ✅ Structured Interpretation
