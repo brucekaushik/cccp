@@ -161,6 +161,14 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
   * 💭 [Rationale for Header Format Design (**reasoning**)](spec/REASONING.md#rationale-for-header-format-design)
   * *(more items coming soon)*
 
+- **Core Concepts & Philosophy**
+  * 💭[Why "Context-Aware"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-context-aware)
+  * 💭[Why "Composable"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-composable)
+  * 💭[Why "Meta" in Meta-Compression Protocol? (**reasoning**)](spec/CORE_CONCEPTS.md#why-meta-in-meta-compression-protocol)
+  * 💭[Why "Framework" in Intermediate Representation (IR) Framework? (**reasoning**)](spec/CORE_CONCEPTS.md#why-framework-in-intermediate-representation-ir-framework)
+  * 💭[Vendorization, LUT Registry and De-Duplication (**reasoning**)](spec/CORE_CONCEPTS.md#vendorization-public-lut-ecosystem-and-dictionary-de-duplication)
+  * 💭[Why "Canonical Packing"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-canonical-packing)
+
 ## 🔌 Future Direction
 
 * Formal IR schema validation
