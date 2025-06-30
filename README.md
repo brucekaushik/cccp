@@ -107,7 +107,7 @@ Assume that this is the LUT of the vendor Knolbay for the below Encoded IR:
 ### Final Textual Form (Optional)
 
 ```
-CCCPv0.2H2:010010H1:keyboardH2:11
+CCCPv0.2H2:0110H1:keyboardH2:11
 ```
 
 ### Final Binary Form (Optional)
