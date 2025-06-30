@@ -57,6 +57,8 @@ A CCCP document in intermediate form consists of:
   * Duplicate keys are allowed.
   * Allows partial encoding: some values transformed, others left raw.
 
+**NOTE:** Realized a mistake in the segment format — it needs a PayloadBitLength field. The IR format will change to support this. Docs will be updated soon.
+
 ### Example
 
 **Input text:**
