@@ -95,7 +95,7 @@ Assume that this is the LUT of the vendor Knolbay for the below Encoded IR:
     "H3": "LUT:Knolbay:Zoo@1.0.0"
   },
   "segments": [
-    ["H3", "010010"],   // 'cat', 'dog'
+    ["H3", "0110"],   // 'cat', 'dog'
     ["H1", "keyboard"], // not encoded
     ["H3", "11"]         // 'lion'
   ]
