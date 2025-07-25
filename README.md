@@ -32,32 +32,42 @@ While CCCP itself does not interpret content natively, it enables **context-awar
 
 ## 📦 Intermediate Representation Format
 
-A CCCP document in intermediate form consists of:
+A CCCP document in its intermediate form (IR) captures a structured, partially-transformed version of the data using symbolic headers and segment definitions. This format allows both human-readable inspection and flexible transformation across encoding stages.
 
 ```json
 {
-  "version": "0.2",
-  "headers": {
-    "H1": "EXCLUDE",
-    "H2": "NEWLINE",
-    "H3": "LUT:Knolbay:Zoo@1.0.0"
-  },
+  "version": "0.1",
+  "headers": [
+    ["H1", "Exclude"],
+    ["H2", "NewLine"],
+    ["H3", "ContinuousSpaces"],
+    ["H4", "Knolbay:Zoo@1.0.0"]
+  ],
   "segments": [
-    ["H3", "010010"],
-    ["H1", "keyboard"],
-    ["H3", "11"]
+    ["H3", 8, "01001000"],
+    ["H1", 64, "keyboard"],
+    ["H3", 2, "11"]
   ]
 }
 ```
 
-* **`headers`**: Maps symbolic header keys (H1, H2...) to vendor-defined transformations.
-* **`segments`**: An **ordered list** of `[HeaderRef, Payload]` pairs.
+### `headers`: Symbolic Transformation Mapping
 
-  * Order is preserved.
-  * Duplicate keys are allowed.
-  * Allows partial encoding: some values transformed, others left raw.
+- An **ordered list** of `[HeaderCode, Transformation]` pairs.
+- Each `HeaderCode` (e.g., "H1", "H2") maps to either a standard transformation or a vendor defined one.
+- Transformation values may be:
+  - Built-in instructions (e.g., `"NewLine"`)
+  - Vendor-defined handlers (e.g., `"Knolbay:Zoo@1.0.0"`)
 
-**NOTE:** Realized a mistake in the segment format — it needs a PayloadBitLength field. The IR format will change to support this. Docs will be updated soon.
+### `segments`: Ordered Payload Instructions
+
+- A list of `[HeaderCode, PayloadBitLength, Payload]` triplets.
+- `HeaderCode`: Refers to the transformation rule from `headers`.
+- `PayloadBitLength`: Indicates how many **bits** the transformed payload is expected to occupy in the final binary.
+  - This is used by the decoder to read the exact number of bits for the segment
+  - This value may be set to `0` if the encoder does not need to use it (e.g., when a delimiter like a newline is sufficient to determine boundaries).
+  - Interpretation and enforcement of this field may vary depending on SDK behavior.
+- `Payload`: The value to be interpreted using the associated transformation. In IR form, this can be raw text, symbolic form, or pre-encoded binary - depending on the transformation. In the final binary, this will always be fully binary.
 
 ### Example
 
