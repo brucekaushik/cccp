@@ -30,6 +30,36 @@ Third-party vendors can define transformations like LUT substitutions, filters, 
 
 While CCCP itself does not interpret content natively, it enables **context-aware compression** by allowing vendor-defined logic to determine how tokens are transformed. For example, a LUT might know that "cat" and "lion" belong to the same semantic category and substitute accordingly.
 
+## 🔁 CCCP Pipeline
+
+The standard CCCP pipeline transforms raw input into a compressed binary using the following stages:
+
+```
+Raw Input (Text / Image / Data)
+
+       ↓ ↑
+
+Intermediate Representation (IR)
+(as many stages as needed)
+
+       ↓ ↑
+
+Final Binary Output
+```
+
+Each stage serves a distinct purpose:
+
+1. **Raw Input**: Unstructured or loosely structured source data (e.g. `"cat dog keyboard lion"`).
+
+2. **Intermediate Representation (IR)**: A symbolic, structured, and often *inflated* form. While IR may resemble a partially-encoded format, its primary role is **clarity, transformation flexibility, and round-trippability**.
+
+3. **Final Binary Output**: The fully packed, bit-aligned binary stream. This is the true distribution format, optimized for storage, bandwidth, and optionally layered compression (e.g., via `gzip`, `zstd`).
+
+> **Note**: The IR stage may contain redundant or verbose representations to support readability, transformation logic, or debugging. Compression is not always the goal at this stage — it typically becomes a priority in the final binary output. In fact, compression may be entirely optional, as CCCP can be used purely to standardize or encode parts of a document in consistent, vendor-defined ways.
+
+For entropy analysis, LUT resolution, and cross-vendor encoding/decoding, please refer to the specification index.
+
+
 ## 📦 Intermediate Representation Format
 
 A CCCP document in its intermediate form (IR) captures a structured, partially-transformed version of the data using symbolic headers and segment definitions. This format allows both human-readable inspection and flexible transformation across encoding stages.
