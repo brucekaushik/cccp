@@ -59,6 +59,96 @@ Each stage serves a distinct purpose:
 
 For entropy analysis, LUT resolution, and cross-vendor encoding/decoding, please refer to the specification index.
 
+## 📄 Example: From Text to IR
+
+Once the input enters the CCCP pipeline, the first transformation stage produces an **Intermediate Representation (IR)**. Below is a simple example of how this process works for a plain text input.
+
+---
+
+### 📝 **Input Text**
+
+```
+cat dog keyboard lion
+```
+
+---
+
+### 🧠 Transformation Logic
+
+Assume that we use a vendor-defined transformation — `Knolbay:Zoo@1.0.0` — which includes a Lookup Table (LUT) to encode some known words into compact binary symbols.
+
+The encoder processes the input as follows:
+
+* `"cat dog"` → transformed via LUT
+* `"keyboard"` → left untransformed (excluded)
+* `"lion"` → transformed via LUT
+
+---
+
+### 📦 **Generated IR**
+
+```json
+{
+  "version": "0.1",
+  "headers": [
+    ["H1", "Exclude"],
+    ["H2", "NewLine"],
+    ["H3", "ContinuousSpaces"],
+    ["H4", "Knolbay:Zoo@1.0.0"]
+  ],
+  "segments": [
+    ["H3", 8, "01001000"],    // Encoded "cat dog"
+    ["H1", 64, "keyboard"],   // Left as-is
+    ["H3", 2, "11"]           // Encoded "lion"
+  ]
+}
+```
+
+* This IR is symbolic and partially encoded. It can still be inspected, transformed, or debugged before being finalized as binary.
+* Any IR stage can also be reversed or decoded — making the pipeline round-trippable.
+* The encoded bits can be represented in more compact ways, please refer to the PoC for an example.
+
+---
+
+### 📟 **LUT and Metadata**
+
+To produce the encoded payloads for segments 1 (`"01001000"`) and segment 3 (`"11"`), the encoder relies on the following LUT and metadata:
+
+#### 📂 LUT Metadata
+
+```json
+{
+  "sign": "Knolbay:Poc1@1.0.0",
+  "vendor": "Knolbay",
+  "name": "Zoo",
+  "version": "1.0.0",
+  "symbol_width": 2,
+  "scheme": "bitstr"
+}
+```
+
+#### 🔠 LUT Map
+
+```json
+{
+  " ": "00",
+  "cat": "01",
+  "dog": "10",
+  "lion": "11"
+}
+```
+
+---
+
+### 📦 Installing the Transformation
+
+The transformation logic (LUT, metadata, codec handlers) can be installed using:
+
+```bash
+cccp install Knolbay:Poc1@1.0.0
+```
+
+> **Note**: While this example uses a LUT-based transformation, vendors are free to define custom transformation logic with or without a LUT — including statistical encoders, domain-specific grammars, or stream-based filters.
 
 ## 📦 Intermediate Representation Format
 
@@ -95,65 +185,15 @@ A CCCP document in its intermediate form (IR) captures a structured, partially-t
 - `HeaderCode`: Refers to the transformation rule from `headers`.
 - `PayloadBitLength`: Indicates how many **bits** the transformed payload is expected to occupy in the final binary.
   - This is used by the decoder to read the exact number of bits for the segment
-  - This value may be set to `0` if the encoder does not need to use it (e.g., when a delimiter like a newline is sufficient to determine boundaries).
+  - This value may be set to `0` if the encoder & decoder do not need to use it (e.g., when a delimiter like a newline is sufficient to determine boundaries).
   - Interpretation and enforcement of this field may vary depending on SDK behavior.
 - `Payload`: The value to be interpreted using the associated transformation. In IR form, this can be raw text, symbolic form, or pre-encoded binary - depending on the transformation. In the final binary, this will always be fully binary.
 
-### Example
-
-**Input text:**
-
-```
-cat dog keyboard lion
-```
-
-**LUT Used For Substitution**
-
-Assume that this is the LUT of the vendor Knolbay for the below Encoded IR:
-
-```json
-{
-  "lut": "Zoo",
-  "vendor": "Knolbay",
-  "version": "1.0",
-  "bit_width": 2,
-  "map": {
-    " ": "00",
-    "cat": "01",
-    "dog": "10",
-    "lion": "11"
-  }
-}
-```
-
-**Encoded IR:**
-
-```json
-{
-  "version": "0.2",
-  "headers": {
-    "H1": "EXCLUDE",
-    "H2": "NEWLINE",
-    "H3": "LUT:Knolbay:Zoo@1.0.0"
-  },
-  "segments": [
-    ["H3", "0110"],   // 'cat', 'dog'
-    ["H1", "keyboard"], // not encoded
-    ["H3", "11"]         // 'lion'
-  ]
-}
-```
-
-### Final Textual Form (Optional)
-
-```
-CCCPv0.2H2:0110H1:keyboardH2:11
-```
-
-### Final Binary Form (Optional)
+### Final Binary Form
 
 * Binary packing of header tags and bit sequences
 * Suitable for further compression via tools like `gzip`
+* More details might be added to this section later, for now please refer to the PoC.
 
 ## 🌍 Use Cases
 
