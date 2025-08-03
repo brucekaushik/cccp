@@ -238,7 +238,6 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
   * *(more items coming soon)*
 
 - **IR (Intermediate Representation)**
-  * 💭 [Why Arrays for IR Segments? (**reasoning**)](spec/REASONING.md#why-arrays-for-ir-segments)
   * 🧾 [IR Header Format (**rule**)](spec/RULES.md#ir-header-formats)
   * 💭 [Rationale for Header Format Design (**reasoning**)](spec/REASONING.md#rationale-for-header-format-design)
   * *(more items coming soon)*

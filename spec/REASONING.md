@@ -1,12 +1,3 @@
-## Why Arrays for IR Segments?
-
-Using a list for `segments` instead of an object allows:
-
-* Order preservation
-* Duplicate header usage
-* Easy replacement or transformation of individual entries
-* Seamless pluggability for vendor pipelines
-
 ## Reasoning: Handling of Newlines During IR Encoding
 
 ### Why a dedicated `["H2", PayloadBitlength, LineEnding]` segment?
