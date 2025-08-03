@@ -9,24 +9,34 @@ Using a list for `segments` instead of an object allows:
 
 ## Reasoning: Handling of Newlines During IR Encoding
 
-### Why a dedicated ['H2', <newline>] segment?
+### Why a dedicated `["H2", PayloadBitlength, LineEnding]` segment?
 
 1. **Preserves fidelity** — some files begin with or rely on specific line endings. This rule ensures exact reproduction.
-2. **Vendor discipline** — vendors are forced to treat line endings as structural markers, not incidental characters.
+2. **Vendor flexibility with discipline** — while vendors may choose not to emit this segment directly, they are guaranteed that unhandled line endings will still be emitted in a consistent and predictable way by the SDK.
+3. **Human Readability** — if readability is a concern, emitting line endings separately improves the clarity and formatting of the IR.
+4. **Binary optimization** — the structure of H2 segments makes them ideal for optimization by the SDK or for downstream compression using tools like gzip or Brotli.
+5. **Structural consistency** — clearly distinguishes structural line breaks from data content, removing ambiguity for both humans and automated tooling.
 
-### Why not embed line endings in segments?
+### Why not embed line endings in vendor segments or LUTs?
 
-Although technically possible, this is discouraged because:
+Vendors **may embed line endings** within segments or LUTs if doing so reduces overhead or aligns better with the document structure. For example:
 
-1. It can result in extremely long lines, reducing human readability.
-2. Full binary decoders (especially multi-vendor ones) may misinterpret vendor intent, leading to incorrect or lossy decoding.
+* Including line endings inline may avoid creating additional segments (e.g., a separate newline followed by a fresh segment), which can reduce IR verbosity or improve compression.
+* In tightly formatted content (e.g., CSV, Markdown), treating line endings as part of meaningful content may be more natural or efficient.
 
-### Why not use `[]` or `['__NL__']`?
+However, this comes with tradeoffs:
 
-1. Header parsing becomes unpredictable — empty or custom segments break the Hn structure.
-2. Byte length increases — Hn headers can be tightly mapped to binary tokens (e.g., 2 bits), enabling compression. Mixed segments ruin this.
+* Embedding line endings can lead to larger or irregular segments, reducing IR readability and limiting segment reuse.
+* Multi-vendor or SDK-level tooling may find it harder to interpret such IRs uniformly, especially when transformations or composition across IRs is required.
+* Structural clarity is reduced, making transformation, streaming, or partial decoding more complex.
 
-By keeping newline segments structured as `['H2', ...]`, we preserve both clarity and future binary optimization.
+By contrast, using a dedicated segment like `['H2', PayloadBitlength, LineEnding]` promotes:
+
+* Structural clarity and IR normalization,
+* Easier transformation pipelines, and
+* Centralized optimization or substitution (e.g., reducing to 1 byte in final binary).
+
+**Ultimately**, the choice is left to the vendor, but **standardized line ending handling improves interoperability and toolchain support**.
 
 ## Rationale for Header Format Design
 

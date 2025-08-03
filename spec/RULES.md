@@ -1,10 +1,28 @@
 # Handling of Newlines During IR Encoding
 
-`['H2', <newline character>]`
+Line endings in CCCP IR may or may not be explicitly handled by vendor encoders. If **not encoded** by the vendor, the SDK must emit them using a **dedicated newline segment** in the following format:
 
-The segment header `H2` is **reserved exclusively** for representing line endings in CCCP IR. Vendors must emit line endings explicitly using this segment only.
+```
+["H2", <PayloadBitlength>, <LineEnding>]
+```
 
-The `<newline character>` must match the original document's encoding (`\n`, `\r\n`, or `\r`). Vendors must not embed line endings within data segments or LUTs, nor introduce or normalize newlines unless explicitly instructed.
+* `H2` is **reserved exclusively** for line endings in CCCP IR.
+* `<LineEnding>` reflects the original source encoding (e.g., `\n`, `\r\n`, `\r`).
+* `<PayloadBitlength>` is the bit-length of the encoded representation of the line ending.
+
+Vendors **must not embed** line endings within LUT mappings or data segments unless the SDK explicitly allows it.
+
+The actual enforcement is handled by the SDK. For example, in the POC, the encoder class:
+
+```
+cccp/codec/packers/AsciiToJsonIr
+```
+
+automatically emits all line endings using the `H2` segment format and **prevents vendors from encoding newlines manually**.
+
+➡️ In the **Final Binary**, newline segments may be **compressed** further — potentially to a **single byte** or less — depending on the SDK and binary encoder logic.
+
+This separation ensures consistent and predictable handling of line endings across different vendors and platforms.
 
 # IR Header Formats
 
