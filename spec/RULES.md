@@ -26,31 +26,37 @@ This separation ensures consistent and predictable handling of line endings acro
 
 # IR Header Formats
 
-All CCCP IRs must include a `headers` table that defines how each segment should be interpreted. This section defines the required structure and conventions.
+All CCCP IRs may include a `headers` table that defines how each segment should be interpreted. This section defines the required structure and conventions.
 
-## Required Headers
+## Reserved Headers
 
-The following headers **must always be present** in every IR:
+The following headers are currently **reserved** and their semantics are assumed by default:
 
-- `"H1": "EXCLUDE"` – Reserved for excluded segments (non-decodable)
-- `"H2": "NEWLINE"` – Reserved for newline handling
+* `"H1": "Exclude"` – Reserved for excluded segments (non-decodable)
+* `"H2": "NewLine"` – Reserved for newline handling
 
-These serve as baseline references for minimal decoder compatibility.
+Encoders and decoders may omit these from the `headers` table unless SDK configuration explicitly requires inclusion (e.g., for IR integrity checks using hashes like MD5). More reserved headers may be introduced in the future.
+
+In the final binary form, **reserved headers are never included**, as their meaning is standardized and assumed.
 
 ## Vendor-Specific Transformations
 
-Additional headers may point to vendor-defined LUTs or decoding functions. These must follow the exact format:
+Vendor headers must begin after the reserved headers (`H3` and above). These must follow the exact format:
 
 `LUT:<Vendor>:<Name>@<Version>`
+
+For overhead optimization, the full binary may replace long-form vendor headers with numeric IDs for public or private registered vendors. Unregistered vendors must still use the full string format.
+
+SDKs are required to offer an `add_header()` interface or equivalent, allowing applications to insert headers without needing to manually determine the correct segment number.
 
 ## Example
 
 ```json
 "headers": {
-  "H1": "EXCLUDE",
-  "H2": "NEWLINE",
-  "H3": "LUT:Knolbay:DialogueTelugu@1.0.0",
-  "H4": "LUT:CCCP:Zoo@1.0.1"
+  "H1": "Exclude",
+  "H2": "NewLine",
+  "H3": "Knolbay:DialogueTelugu@1.0.0",
+  "H4": "Cccp:Zoo@1.0.1"
 }
 ```
 

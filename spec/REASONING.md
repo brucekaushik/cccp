@@ -31,32 +31,50 @@ By contrast, using a dedicated segment like `['H2', PayloadBitlength, LineEnding
 
 ## Rationale for Header Format Design
 
-The structured format of IR headers — especially the required headers and PascalCase naming — ensures CCCP remains predictable, extensible, and vendor-safe.
+The structured format of IR headers — especially reserved headers, vendor segments, and PascalCase naming — ensures CCCP remains predictable, extensible, and vendor-safe.
 
-### 🔒 Why `H1` and `H2` Are Mandatory
+### 🔒 Why Reserved Headers Exist (e.g., `H1`, `H2`)
 
-- `H1` represents **excluded (unencoded) raw data** — such as original text, images, or binary regions.
-  Vendors **must use** this label during encoding when segments are intentionally left uncompressed or uninterpreted.
+* `H1` represents **excluded (unencoded) raw data** — such as original text, images, or binary regions.
+  Vendors may use this label during encoding when segments are intentionally left uncompressed or uninterpreted.
   Decoders must recognize it to **preserve passthrough fidelity**.
 
-- `H2` represents **newline regions** in the source document.
-  Vendors must insert `H2` segments to explicitly mark these, allowing newline handling to be **normalized or deferred**.
-  Multiple `H2` segments may exist depending on the document's structure, and **must not be replaced by vendor-specific headers**.
+* `H2` represents **newline regions** in the source document.
+  Vendors may emit `H2` segments directly, or rely on the SDK to inject them automatically for unhandled line endings.
+  These allow newline handling to be **normalized or deferred**, and multiple `H2` segments may exist depending on structure.
 
-Together, these headers:
-- Define a **baseline contract** between all encoders and decoders
-- Ensure **universal interpretability** of minimal IRs
-- Allow safe composition with additional vendor-specific headers like `H3`, `H4`, etc.
+Although currently only `H1` and `H2` are reserved, **more reserved headers may be introduced** as the protocol evolves.
+
+SDKs **must offer configuration options** to:
+
+* Control whether reserved headers are explicitly included in the IR (e.g., for hashing or reproducibility).
+* Recognize that reserved headers are **implicitly known and excluded** from the final binary to reduce overhead.
+
+> ✅ SDKs must also expose methods like `add_header()` so applications do not need to manually assign or manage header numbers.
+
+Vendor-defined headers must **only begin after the reserved header range**, which protects protocol consistency and prevents accidental collisions.
+
+In the final binary:
+
+* Reserved headers like `H1` and `H2` are **not included**, as their meaning is assumed.
+* Publicly registered headers (e.g., `Knolbay:DialogueTelugu@1.0.0`) may be **mapped to compact numeric IDs**.
+* Unregistered headers must remain in their full namespaced form to preserve meaning.
+
+Together, these rules:
+
+* Define a **baseline contract** between all encoders and decoders
+* Ensure **universal interpretability** of minimal IRs
+* Allow safe composition with vendor-defined transformations
 
 ### 📐 Why PascalCase for Vendor and Name
 
-- Enforces **visual clarity** and predictable casing in IRs
-- Prevents confusion from style clashes (`knolbay`, `KnolBay`, `KNOLBAY`)
-- Simplifies tooling, validation, and indexing of LUTs
+* Enforces **visual clarity** and predictable casing in IRs
+* Prevents confusion from style clashes (`knolbay`, `KnolBay`, `KNOLBAY`)
+* Simplifies tooling, validation, and indexing of LUTs
 
 ### 🔄 Why Namespacing + Versioning is Required
 
-- Enables **coexistence** of multiple versions of the same LUT
-- Allows **graceful degradation** in case of unknown or unsupported transformations
-- Supports **decentralized plugin ecosystems**
-- Makes IRs **deterministic and auditable** for long-term reproducibility
+* Enables **coexistence** of multiple versions of the same LUT
+* Allows **graceful degradation** in case of unknown or unsupported transformations
+* Supports **decentralized plugin ecosystems**
+* Makes IRs **deterministic and auditable** for long-term reproducibility
