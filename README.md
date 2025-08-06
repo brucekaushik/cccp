@@ -200,15 +200,15 @@ A CCCP document in its intermediate form (IR) captures a structured, partially-t
 > Note: The use cases listed below are tentative and need to be re-evaluated and validated through proof-of-concepts (POCs). For now, they represent plausible directions based on current reasoning.
 
 * Text compression (using domain-specific LUTs)
-* Language switching (e.g., `LUT:Cccp:DialogTelugu@1.0.0`)
-* Game assets (e.g., `LUT:Knolbay:EncodeTileset@1.0.0`)
+* Language switching (e.g., `Cccp:DialogTelugu@1.0.0`)
+* Game assets (e.g., `Knolbay:EncodeTileset@1.0.0`)
 * Embedded devices (sensor logs with shared LUTs)
 * Network protocols (compact domain-specific payloads)
 * Mixed-data archiving with LUT-switching and fallback zones
-* Image compression using vendor-defined functions and tile-based optimization (e.g., `LUT:Knolbay:EncodeSpriteMap@2.1.1`)
-* Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `LUT:Cccp:DialogLatin@1.0.0`)
+* Image compression using vendor-defined functions and tile-based optimization (e.g., `Knolbay:EncodeSpriteMap@2.1.1`)
+* Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `Cccp:DialogLatin@1.0.0`)
 * Archival storage — layer CCCP IR before binary packing for long-term interpretable storage of logs, telemetry, and structured content
-* AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., LUT:CCCP:dialogue.telugu@1.0)
+* AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., CCCP:dialogue.telugu@1.0)
 * Code compression and syntax normalization (e.g., LUTs for frequent code patterns like `public static`, `console.log`, etc.)
 * Configuration file templating (replace common config keys/values in JSON, YAML, etc.)
 * Markdown or documentation optimization (tokenize frequent headings or boilerplate formatting)

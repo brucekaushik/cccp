@@ -43,7 +43,7 @@ In the final binary form, **reserved headers are never included**, as their mean
 
 Vendor headers must begin after the reserved headers (`H3` and above). These must follow the exact format:
 
-`LUT:<Vendor>:<Name>@<Version>`
+`<Vendor>:<Name>@<Version>`
 
 For overhead optimization, the full binary may replace long-form vendor headers with numeric IDs for public or private registered vendors. Unregistered vendors must still use the full string format.
 
