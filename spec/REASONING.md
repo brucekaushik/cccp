@@ -1,3 +1,52 @@
+## Rationale for a separate segment for un-encoded data during IR encoding
+
+### Why a dedicated `["H1", PayloadBitlength, Payload]` segment?
+
+1. **Enables Vendorization** - The existence of H1 is what makes vendorization possible. Only un-encoded data (in H1) is eligible for further processing by another vendor. A subsequent vendor may choose to encode that data, replacing the H1 segment with a vendor segment, or splitting it into multiple vendor and exclude segments.
+
+2. **Guarantees fidelity of source data** — Certain portions of the input may not be suitable or necessary for encoding. By preserving these portions in H1 segments, the encoder ensures that the original data can be reconstructed exactly as-is.
+
+3. **Separation of concerns** — Keeping excluded data in a dedicated segment ensures clarity and semantic separation. It becomes easier for tooling to distinguish between encoded and untouched content.
+
+4. **Predictable decoding** — SDKs and tools can reliably interpret H1 segments as raw content, eliminating the need to analyze or guess encoding state.
+
+5. **Support for partial decoding** — Because H1 segments are untouched, they can be decoded or inspected independently, allowing for partial rendering, streaming, or debugging without requiring the full decoding context.
+
+6. **Compression-friendly layout** — Raw or repeated data across files (e.g., boilerplate text) stored in H1 segments is easier for traditional compression algorithms (such as those used in gzip or Brotli) to handle effectively, thanks to consistent formatting.
+
+### Why not treat un-encoded data as part of vendor segment payloads?
+
+While technically feasible, treating un-encoded data as just another part of a vendor segment turns the CCCP IR into an opaque stream—indistinguishable from traditional compression formats. This would undermine many of CCCP's core goals:
+
+* **Loss of structure awareness** — When un-encoded content is embedded within vendor payloads, tools and SDKs lose visibility into which parts were transformed and which were passed through.
+
+* **Inconsistent behavior** — Interoperability suffers when vendors or SDKs handle opaque payloads differently, leading to fragile or incompatible encoding/decoding pipelines.
+
+By contrast, the `['H1', PayloadBitlength, Payload]` structure:
+
+* Enforces clarity of intent,
+* Enables deterministic parsing,
+* Simplifies structural transformations, and
+* Aligns with CCCP’s principle of "composable and inspectable streams."
+
+### SDK Responsibilities
+
+The SDK layer is responsible for ensuring the proper use and handling of H1 segments:
+
+* **Auto-emission** — When a vendor omits encoding certain content, the SDK automatically wraps that data in H1 segments.
+* **Enforcement** — Vendors should not embed raw data within their own segment formats unless explicitly allowed.
+* **Compression** — The SDK may apply additional compression to H1 content at binary emission time if needed.
+
+In the current POC implementation, the encoder class:
+
+```
+cccp/codec/packers/AsciiToJsonIr
+```
+
+automatically emits H1 segments for any text not actively encoded by the vendor.
+
+This standardized mechanism ensures that excluded content is handled transparently, predictably, and in a way that supports interoperability and future re-encoding.
+
 ## Reasoning: Handling of Newlines During IR Encoding
 
 ### Why a dedicated `["H2", PayloadBitlength, LineEnding]` segment?

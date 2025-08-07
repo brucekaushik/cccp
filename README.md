@@ -229,6 +229,8 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
 > - (**implementation**) – How to write code to follow the spec
 
 - **Encoder**
+  * 🧾 [Un-encoded Data Handling (**rule**)](spec/RULES.md#handling-of-un-encoded-data-during-ir-encoding)
+  * 💭 [Rationale for a separate segment for Un-encoded Data During IR Encoding (**reasoning**)](spec/REASONING.md#rationale-for-a-separate-segment-for-un-encoded-data-during-ir-encoding)
   * 🧾 [New Line Handling (**rule**)](spec/RULES.md#handling-of-newlines-during-ir-encoding)
   * 💭 [New Line Handling (**reasoning**)](spec/REASONING.md#reasoning-handling-of-newlines-during-ir-encoding)
   * *(more items coming soon)*

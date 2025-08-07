@@ -1,3 +1,29 @@
+# Handling of un-encoded data During IR Encoding
+
+When encoding source data, and the encoder decides that the data is best left as is (un-encoded), it must be placed in the Exclude segment by the SDK.
+
+```
+["H1", <PayloadBitlength>, <Payload>]
+```
+
+* `H1` is **reserved exclusively** for excluded data in CCCP IR.
+* `<PayloadBitlength>` is the bit-length of the un-encoded data.
+* `<Payload>` reflects the original source data.
+
+Vendors **must not embed** un-encoded data within the segment payload unless the SDK explicitly allows it.
+
+The actual enforcement is handled by the SDK. For example, in the POC, the encoder class:
+
+```
+cccp/codec/packers/AsciiToJsonIr
+```
+
+automatically emits all un-encoded text using the `H1` segment format.
+
+➡️ In the **Final Binary**, Exclude segments may be **compressed** further if the SDK sees it feasible.
+
+This separation ensures consistent and predictable handling of un-encoded data across different vendors.
+
 # Handling of Newlines During IR Encoding
 
 Line endings in CCCP IR may or may not be explicitly handled by vendor encoders. If **not encoded** by the vendor, the SDK must emit them using a **dedicated newline segment** in the following format:
