@@ -228,6 +228,20 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
 > - (**example**) – Annotated samples or usage cases.
 > - (**implementation**) – How to write code to follow the spec
 
+- **Core Concepts & Philosophy**
+  * 💭[Why "Context-Aware"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-context-aware)
+  * 💭[Why "Composable"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-composable)
+  * 💭[Why "Meta" in Meta-Compression Protocol? (**reasoning**)](spec/CORE_CONCEPTS.md#why-meta-in-meta-compression-protocol)
+  * 💭[Why "Framework" in Intermediate Representation (IR) Framework? (**reasoning**)](spec/CORE_CONCEPTS.md#why-framework-in-intermediate-representation-ir-framework)
+  * 💭[Vendorization, LUT Registry and De-Duplication (**reasoning**)](spec/CORE_CONCEPTS.md#vendorization-public-lut-ecosystem-and-dictionary-de-duplication)
+  * 💭[Why "Canonical Packing"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-canonical-packing)
+  * *(more items coming soon)*
+
+- **IR (Intermediate Representation)**
+  * 🧾 [IR Header Format (**rule**)](spec/RULES.md#ir-header-formats)
+  * 💭 [Rationale for Header Format Design (**reasoning**)](spec/REASONING.md#rationale-for-header-format-design)
+  * *(more items coming soon)*
+
 - **Encoding from source to IR**
   * 🧾 [Un-encoded Data Handling (**rule**)](spec/RULES.md#handling-of-un-encoded-data-during-ir-encoding)
   * 💭 [Rationale for a separate segment for Un-encoded Data During IR Encoding (**reasoning**)](spec/REASONING.md#rationale-for-a-separate-segment-for-un-encoded-data-during-ir-encoding)
@@ -239,18 +253,6 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
   * 🛠️ [Segment Decoding Logic (**implementation**)](spec/IMPLEMENTATION.md#segment-decoding-logic-during-ir-decoding)
   * *(more items coming soon)*
 
-- **IR (Intermediate Representation)**
-  * 🧾 [IR Header Format (**rule**)](spec/RULES.md#ir-header-formats)
-  * 💭 [Rationale for Header Format Design (**reasoning**)](spec/REASONING.md#rationale-for-header-format-design)
-  * *(more items coming soon)*
-
-- **Core Concepts & Philosophy**
-  * 💭[Why "Context-Aware"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-context-aware)
-  * 💭[Why "Composable"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-composable)
-  * 💭[Why "Meta" in Meta-Compression Protocol? (**reasoning**)](spec/CORE_CONCEPTS.md#why-meta-in-meta-compression-protocol)
-  * 💭[Why "Framework" in Intermediate Representation (IR) Framework? (**reasoning**)](spec/CORE_CONCEPTS.md#why-framework-in-intermediate-representation-ir-framework)
-  * 💭[Vendorization, LUT Registry and De-Duplication (**reasoning**)](spec/CORE_CONCEPTS.md#vendorization-public-lut-ecosystem-and-dictionary-de-duplication)
-  * 💭[Why "Canonical Packing"? (**reasoning**)](spec/CORE_CONCEPTS.md#why-canonical-packing)
 
 ## 🔌 Future Direction
 
