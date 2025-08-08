@@ -127,3 +127,84 @@ Together, these rules:
 * Allows **graceful degradation** in case of unknown or unsupported transformations
 * Supports **decentralized plugin ecosystems**
 * Makes IRs **deterministic and auditable** for long-term reproducibility
+
+# Minimizing the overhead caused by Segments of IR when encoding to Binary
+
+## Segment Structure
+
+A CCCP IR segment in binary form follows the pattern:
+
+```
+["Hn", <PayloadBitlength>, <Payload>]
+```
+
+where:
+
+* `Hn` — Segment type, where `n` is an integer mapping to a transformation.
+* `PayloadBitlength` — Length of the payload, expressed in a compact form.
+* `Payload` — The encoded data itself.
+
+---
+
+## 1. Encoding `Hn`
+
+* **Range and size**: With fewer than 255 expected transformations per IR, and realistically fewer than 100 vendor-specific ones per IR, `Hn` fits comfortably in **1 byte**.
+* **Potential sub-byte encoding**: If mixed-bit packing is used, `Hn` could be encoded in less than 1 byte. However, for determinism and simplicity, we will assume it to **1 byte** for now.
+* **Byte alignment vs. compactness**: Choosing 1 byte ensures byte-aligned parsing across SDKs, avoiding ambiguity.
+
+---
+
+## 2. Encoding `PayloadBitlength`
+
+Once `Hn` is fixed-size, no separator is needed — `PayloadBitlength` can directly follow `Hn`.
+
+**Representation options:**
+
+* **Byte count** — Used when the payload is not LUT-encoded.
+* **Symbol width** — Used when LUT encoding is applied (symbol width available from LUT metadata).
+
+**Symbol width encoding choices:**
+
+1. **Binary representation**
+
+   * Allows up to 254 symbols per byte and `00000000` is the delimiter which follows.
+   * Normally requires 2 bytes of overhead for symbol width.
+   * Can be reduced to **1 byte** if segments are limited to ≤255 symbols — sufficient in most real-world cases.
+
+2. **ASCII representation**
+
+   * Requires a stop indicator (deterministic byte such as a comma).
+   * Can be optimized using ASCII hex, but generally incurs a **minimum 2-byte** overhead.
+
+---
+
+## 3. Encoding the `Payload`
+
+* Fundamentally just an integer stream in binary.
+* **Byte alignment** makes parsing simpler but can waste up to 7 bits.
+* **Variable bit length encoding** can reduce overhead, but increases decoding complexity.
+
+**End detection strategies:**
+
+* **With `PayloadBitlength`** — No delimiter needed; decoder reads exactly the given length.
+* **Without `PayloadBitlength`** — Requires a delimiter of the same symbol width, ensuring it doesn’t appear in the payload (possible in LUT-based encoding).
+
+In most cases, **explicit `PayloadBitlength`** is preferred for efficiency.
+
+---
+
+## 4. Responsibility for Overhead Reduction
+
+Reducing per-segment overhead is **the SDK's responsibility**, not the vendor encoder's. However:
+
+* Vendor encoders **must** be aware of the overhead cost per segment (in bits/bytes).
+* An SDK API should expose introspection methods so encoders can make informed decisions.
+
+---
+
+**Design Goals:**
+
+* Keep parsing deterministic.
+* Minimize wasted bits.
+* Ensure flexibility for both LUT and non-LUT encodings.
+* Maintain vendor awareness of encoding efficiency without burdening them with low-level bit-packing logic.

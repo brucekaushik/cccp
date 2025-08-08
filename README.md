@@ -249,6 +249,10 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
   * 💭 [New Line Handling (**reasoning**)](spec/REASONING.md#reasoning-handling-of-newlines-during-ir-encoding)
   * *(more items coming soon)*
 
+- **Encoding from IR to Binary**
+  * 💭 [Minimizing the overhead caused by Segments of IR when encoding to Binary (**reasoning**)](spec/REASONING.md#minimizing-the-overhead-caused-by-segments-of-ir-when-encoding-to-binary)
+  * *(more items coming soon)*
+
 - **Decoding from IR to source**
   * 🛠️ [Segment Decoding Logic (**implementation**)](spec/IMPLEMENTATION.md#segment-decoding-logic-during-ir-decoding)
   * *(more items coming soon)*
