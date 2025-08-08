@@ -1,6 +1,6 @@
-## Rationale for a separate segment for un-encoded data during IR encoding
+# Rationale for a separate segment for un-encoded data during IR encoding
 
-### Why a dedicated `["H1", PayloadBitlength, Payload]` segment?
+## Why a dedicated `["H1", PayloadBitlength, Payload]` segment?
 
 1. **Enables Vendorization** - The existence of H1 is what makes vendorization possible. Only un-encoded data (in H1) is eligible for further processing by another vendor. A subsequent vendor may choose to encode that data, replacing the H1 segment with a vendor segment, or splitting it into multiple vendor and exclude segments.
 
@@ -29,7 +29,7 @@ By contrast, the `['H1', PayloadBitlength, Payload]` structure:
 * Simplifies structural transformations, and
 * Aligns with CCCP’s principle of "composable and inspectable streams."
 
-### SDK Responsibilities
+## SDK Responsibilities
 
 The SDK layer is responsible for ensuring the proper use and handling of H1 segments:
 
@@ -47,9 +47,9 @@ automatically emits H1 segments for any text not actively encoded by the vendor.
 
 This standardized mechanism ensures that excluded content is handled transparently, predictably, and in a way that supports interoperability and future re-encoding.
 
-## Reasoning: Handling of Newlines During IR Encoding
+# Reasoning: Handling of Newlines During IR Encoding
 
-### Why a dedicated `["H2", PayloadBitlength, LineEnding]` segment?
+## Why a dedicated `["H2", PayloadBitlength, LineEnding]` segment?
 
 1. **Preserves fidelity** — some files begin with or rely on specific line endings. This rule ensures exact reproduction.
 2. **Vendor flexibility with discipline** — while vendors may choose not to emit this segment directly, they are guaranteed that unhandled line endings will still be emitted in a consistent and predictable way by the SDK.
@@ -57,7 +57,7 @@ This standardized mechanism ensures that excluded content is handled transparent
 4. **Binary optimization** — the structure of H2 segments makes them ideal for optimization by the SDK or for downstream compression using tools like gzip or Brotli.
 5. **Structural consistency** — clearly distinguishes structural line breaks from data content, removing ambiguity for both humans and automated tooling.
 
-### Why not embed line endings in vendor segments or LUTs?
+## Why not embed line endings in vendor segments or LUTs?
 
 Vendors **may embed line endings** within segments or LUTs if doing so reduces overhead or aligns better with the document structure. For example:
 
@@ -78,11 +78,11 @@ By contrast, using a dedicated segment like `['H2', PayloadBitlength, LineEnding
 
 **Ultimately**, the choice is left to the vendor, but **standardized line ending handling improves interoperability and toolchain support**.
 
-## Rationale for Header Format Design
+# Rationale for Header Format Design
 
 The structured format of IR headers — especially reserved headers, vendor segments, and PascalCase naming — ensures CCCP remains predictable, extensible, and vendor-safe.
 
-### 🔒 Why Reserved Headers Exist (e.g., `H1`, `H2`)
+## 🔒 Why Reserved Headers Exist (e.g., `H1`, `H2`)
 
 * `H1` represents **excluded (unencoded) raw data** — such as original text, images, or binary regions.
   Vendors may use this label during encoding when segments are intentionally left uncompressed or uninterpreted.
@@ -115,13 +115,13 @@ Together, these rules:
 * Ensure **universal interpretability** of minimal IRs
 * Allow safe composition with vendor-defined transformations
 
-### 📐 Why PascalCase for Vendor and Name
+## 📐 Why PascalCase for Vendor and Name
 
 * Enforces **visual clarity** and predictable casing in IRs
 * Prevents confusion from style clashes (`knolbay`, `KnolBay`, `KNOLBAY`)
 * Simplifies tooling, validation, and indexing of LUTs
 
-### 🔄 Why Namespacing + Versioning is Required
+## 🔄 Why Namespacing + Versioning is Required
 
 * Enables **coexistence** of multiple versions of the same LUT
 * Allows **graceful degradation** in case of unknown or unsupported transformations
