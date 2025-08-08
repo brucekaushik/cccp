@@ -114,6 +114,7 @@ The encoder processes the input as follows:
 * This IR is symbolic and partially encoded. It can still be inspected, transformed, or debugged before being finalized as binary.
 * Any IR stage can also be reversed or decoded — making the pipeline round-trippable.
 * The encoded bits in the IR can be represented in more compact ways, please refer to the [POC](https://github.com/brucekaushik/cccp-python-poc) for an example.
+* SFOR is preferred over JSON for streamability, for details, see the [SFOR](https://github.com/brucekaushik/sfor) repository.
 
 ---
 
@@ -195,6 +196,16 @@ A CCCP document in its intermediate form (IR) captures a structured, partially-t
   - This value may be set to `0` if the encoder & decoder do not need to use it (e.g., when a delimiter like a newline is sufficient to determine boundaries).
   - Interpretation and enforcement of this field may vary depending on SDK behavior.
 - `Payload`: The value to be interpreted using the associated transformation. In IR form, this can be raw text, symbolic form, or pre-encoded binary - depending on the transformation. In the final binary, this will always be fully binary.
+
+### SFOR instead of JSON for streamability
+
+The above example uses JSON, but JSON is not streamable — making it unsuitable for large files without exhausting memory.
+
+To address this, a new general-purpose format called SFOR has been created. SFOR makes it feasible to:
+* Process data without loading the entire file into memory
+* Perform fully streamable encoding/decoding
+
+For more details, see the [SFOR](https://github.com/brucekaushik/sfor) repository.
 
 ### Final Binary Form
 
