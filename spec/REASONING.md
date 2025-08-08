@@ -37,7 +37,7 @@ The SDK layer is responsible for ensuring the proper use and handling of H1 segm
 * **Enforcement** — Vendors should not embed raw data within their own segment formats unless explicitly allowed.
 * **Compression** — The SDK may apply additional compression to H1 content at binary emission time if needed.
 
-In the current POC implementation, the encoder class:
+In the current [POC](https://github.com/brucekaushik/cccp-python-poc) implementation, the encoder class:
 
 ```
 cccp/codec/packers/AsciiToJsonIr

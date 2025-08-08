@@ -12,7 +12,7 @@ When encoding source data, and the encoder decides that the data is best left as
 
 Vendors **must not embed** un-encoded data within the segment payload unless the SDK explicitly allows it.
 
-The actual enforcement is handled by the SDK. For example, in the POC, the encoder class:
+The actual enforcement is handled by the SDK. For example, in the [POC](https://github.com/brucekaushik/cccp-python-poc), the encoder class:
 
 ```
 cccp/codec/packers/AsciiToJsonIr
@@ -38,7 +38,7 @@ Line endings in CCCP IR may or may not be explicitly handled by vendor encoders.
 
 Vendors **must not embed** line endings within LUT mappings or data segments unless the SDK explicitly allows it.
 
-The actual enforcement is handled by the SDK. For example, in the POC, the encoder class:
+The actual enforcement is handled by the SDK. For example, in the [POC](https://github.com/brucekaushik/cccp-python-poc), the encoder class:
 
 ```
 cccp/codec/packers/AsciiToJsonIr

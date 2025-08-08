@@ -59,6 +59,13 @@ Each stage serves a distinct purpose:
 
 For entropy analysis, LUT resolution, and cross-vendor encoding/decoding, please refer to the specification index.
 
+## 🧪 Proof-Of-Concept (POC)
+
+Before we jump to the example, note that a working POC exists demonstrating the full CCCP pipeline in action.
+It uses a dictionary of 3,70,099 words with a 19-bit symbol width.
+
+🔗 [View the POC Repository](https://github.com/brucekaushik/cccp-python-poc)
+
 ## 📄 Example: From Text to IR
 
 Once the input enters the CCCP pipeline, the first transformation stage produces an **Intermediate Representation (IR)**. Below is a simple example of how this process works for a plain text input.
@@ -106,7 +113,7 @@ The encoder processes the input as follows:
 
 * This IR is symbolic and partially encoded. It can still be inspected, transformed, or debugged before being finalized as binary.
 * Any IR stage can also be reversed or decoded — making the pipeline round-trippable.
-* The encoded bits can be represented in more compact ways, please refer to the PoC for an example.
+* The encoded bits in the IR can be represented in more compact ways, please refer to the [POC](https://github.com/brucekaushik/cccp-python-poc) for an example.
 
 ---
 
