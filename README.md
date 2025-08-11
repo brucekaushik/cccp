@@ -21,7 +21,7 @@ CCCP splits content into meaningful, vendor-defined segments. Some segments may 
 
 ### 🔁 Reversibility & Optional Final Compression
 
-CCCP allows progressive encoding: raw → IR → compact textual → full binary. At every stage, decoding remains possible. Final compression is optional (e.g., gzip).
+CCCP allows progressive encoding: raw → IR → full binary. At every stage, decoding remains possible. Final compression is optional (e.g., gzip).
 
 ### 🧩 Vendor Extensibility
 
