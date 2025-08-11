@@ -2,7 +2,8 @@
 
 *Composable Compression & Canonical Packing for Interpretable Encoding Pipelines*
 
-**Version:** `0.1`
+**Version:** `0.1`\
+**Status**: Draft (Open for feedback)
 
 ## 🧭 Overview
 
