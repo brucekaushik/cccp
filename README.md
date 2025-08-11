@@ -226,7 +226,7 @@ For more details, see the [SFOR](https://github.com/brucekaushik/sfor) repositor
 * Image compression using vendor-defined functions and tile-based optimization (e.g., `Knolbay:EncodeSpriteMap@2.1.1`)
 * Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `Cccp:DialogLatin@1.0.0`)
 * Archival storage — layer CCCP IR before binary packing for long-term interpretable storage of logs, telemetry, and structured content
-* AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., CCCP:dialogue.telugu@1.0)
+* AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., `Cccp:dialogue.telugu@1.0.0`)
 * Code compression and syntax normalization (e.g., LUTs for frequent code patterns like `public static`, `console.log`, etc.)
 * Configuration file templating (replace common config keys/values in JSON, YAML, etc.)
 * Markdown or documentation optimization (tokenize frequent headings or boilerplate formatting)
