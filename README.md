@@ -87,9 +87,9 @@ Assume that we use a vendor-defined transformation — `Knolbay:Zoo@1.0.0` — w
 
 The encoder processes the input as follows:
 
-* `"cat dog"` → transformed via LUT
+* `"cat dog "` → transformed via LUT
 * `"keyboard"` → left untransformed (excluded)
-* `"lion"` → transformed via LUT
+* `" lion"` → transformed via LUT
 
 ---
 
@@ -105,9 +105,9 @@ The encoder processes the input as follows:
     ["H4", "Knolbay:Zoo@1.0.0"]
   ],
   "segments": [
-    ["H3", 8, "01001000"],    // Encoded "cat dog"
+    ["H4", 8, "01001000"],    // Encoded "cat dog "
     ["H1", 64, "keyboard"],   // Left as-is
-    ["H3", 2, "11"]           // Encoded "lion"
+    ["H4", 4, "0011"]           // Encoded " lion"
   ]
 }
 ```
@@ -173,9 +173,9 @@ A CCCP document in its intermediate form (IR) captures a structured, partially-t
     ["H4", "Knolbay:Zoo@1.0.0"]
   ],
   "segments": [
-    ["H3", 8, "01001000"],
+    ["H4", 8, "01001000"],
     ["H1", 64, "keyboard"],
-    ["H3", 2, "11"]
+    ["H4", 4, "0011"]
   ]
 }
 ```
