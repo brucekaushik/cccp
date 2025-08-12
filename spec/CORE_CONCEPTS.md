@@ -10,7 +10,7 @@ This unlocks smarter, more adaptive compression strategies that go far beyond ge
 
 - **Semantics-Driven Encoding:** CCCP doesn’t just compress — it allows the encoder to understand *what the data represents* (e.g., public keys, emojis, binary assets) and encode accordingly.
 
-- **Header-Guided Behavior:** IR segments are explicitly tagged (e.g., `H1`, `H2`, `HVendor/XYZ`), allowing decoders and transformers to **choose logic based on header context**.
+- **Header-Guided Behavior:** IR segments are explicitly tagged (e.g., `H1`, `H2`, `H(Vendor)`), allowing decoders and transformers to **choose logic based on header context**.
 
 - **LUTs Tailored to Content:** Context determines which LUTs are applied. For example:
   - Text? Use domain-specific synonym LUTs.
@@ -38,14 +38,6 @@ This unlocks smarter, more adaptive compression strategies that go far beyond ge
 
 ---
 
-### 🧱 Think of CCCP As...
-
-- A **multi-lingual interpreter** — it understands not just symbols, but the meaning behind them.
-- A **compression DSL** — where the encoding depends on the context you're writing in.
-- A **protocol-aware sandbox** — each segment or layer can define its own rules, safely and predictably.
-
----
-
 ### TL;DR
 
 CCCP is **context-aware** so it can compress and transform data in a way that’s **semantically meaningful, vendor-specific, and locally reversible**. It enables encoding logic that understands *what* the data is — not just *how* it looks in bytes.
@@ -54,7 +46,7 @@ CCCP is **context-aware** so it can compress and transform data in a way that’
 
 ## Why "Composable"?
 
-**CCCP is composable by design.** That means its components — headers, segments, LUTs, and transformations — can be **combined, nested, reused, or extended** in predictable and meaningful ways.
+**CCCP is composable by design.** That means its components — headers, segments, LUTs, and transformations — can be **combined, reused, or extended** in predictable and meaningful ways.
 
 ---
 
@@ -64,19 +56,9 @@ CCCP is **context-aware** so it can compress and transform data in a way that’
 
 - **Vendor Interoperability:** Vendors can build on top of shared conventions (`H1`, `H2`) while introducing their own logic — **without breaking other systems**. CCCP enables vendors to **compose their functionality over the base protocol**.
 
-- **Composable LUTs:** Lookup tables (LUTs) can be chained, stacked, or overridden — enabling advanced substitutions or layered transformations without hardcoding everything into one giant block.
-
 - **Selective Decoding:** Because CCCP’s format is modular, decoders can process **only the layers they understand** and safely skip or passthrough the rest. This allows for **partial decoding** or progressive enhancement.
 
 - **Reusability:** Common patterns (like newline normalization, public key replacement, or metadata injection) can be packaged into reusable modules and applied across different use cases or domains.
-
----
-
-### 🧱 Think of CCCP as...
-
-- A **Lego system for data workflows** — where headers, segments, and logic are modular bricks.
-- A **middleware architecture** — where layers of logic are stacked on top of a shared core.
-- A **functional pipeline** — where transformations are applied cleanly and reversibly in sequence.
 
 ---
 
@@ -90,33 +72,29 @@ CCCP is **composable** so that data transformations can be **modular, extensible
 
 Traditional compression algorithms — like ZIP, Gzip, or Brotli — work at the raw data level, treating input as a stream of bytes to minimize size. These are **final-stage compressors**.
 
-**CCCP is different.** It's not a compressor itself — it’s a **protocol for organizing, interpreting, and transforming data before compression even begins.** That’s why we call it **meta-compression**:
+**CCCP is different.** It's not just a compressor — it’s a **protocol for organizing, interpreting, and transforming data before compression even begins.** That’s why we call it **meta-compression**:
 
-> It operates *above* compression — defining **how data should be shaped, structured, and encoded** to make it compressible, modular, and reversible.
+> It has a layer that operates *above* compression — defining **how data should be shaped, structured, and encoded** to make it compressible, modular, and reversible.
 
 ---
 
 ### 🔍 What Makes It "Meta"?
 
-- **Structured Preprocessing:** CCCP defines logical layers, headers, and substitutions that *prepare* data for downstream compression — improving results or enabling special-purpose workflows.
+- **Structured Preprocessing:** CCCP defines logical layers, headers, substitutions, and transformations that prepare data for optimal compression — whether by CCCP’s own binary output or by downstream compressors.
 
-- **Pluggable Design:** You can plug in your own lookup tables (LUTs), encoding rules, or vendor-specific logic. CCCP doesn’t compress data — it **orchestrates the path to compression**.
+- **Dual Role:** CCCP is both a meta-layer for orchestrating multi-stage compression workflows and a self-contained final binary generator. The CCCP binary format can stand alone or be further reduced by traditional compressors.
 
-- **Intermediate Representation (IR):** The protocol produces a structured IR — a format that’s reversible, interpretable, and often more compressible than raw data.
+- **Pluggable Design:** Developers can plug in their own lookup tables (LUTs), encoding rules, or vendor-specific logic. This makes CCCP adaptable across domains — from structured text to multimedia streams.
 
-- **Multi-stage Pipeline Support:** CCCP can describe workflows involving multiple codecs, layered interpretations, or intelligent substitutions — across vendors, domains, or contexts.
+- **Intermediate Representation (IR):** CCCP produces a structured, reversible, and interpretable IR. This IR is the blueprint for both final binary creation and external codec workflows.
 
----
-
-### 🧩 Think of CCCP As...
-
-- A **compiler** for compression: Just like compilers optimize code before execution, CCCP **optimizes data before compression**.
-- A **blueprint**: It defines how to *reshape* and *tag* data so that any final compressor (or decoder) can do its job more efficiently.
-- A **meta-layer**: It sits between raw data and traditional compression, enabling structured, reversible operations — without locking you into a single codec.
+- **Multi-stage Pipeline Support:** CCCP can coordinate workflows involving multiple codecs, layered interpretations, intelligent substitutions, or hybrid vendor/domain-specific optimizations.
 
 ---
 
-**"Meta-compression"** means CCCP **doesn't compress directly** — it defines a **protocol for preparing data** in ways that unlock better, smarter, and more modular compression workflows.
+**"Meta-compression"** in CCCP means it’s not just “one more compressor” — it’s a framework plus format:
+- **Framework** — orchestrates data transformations for better compressibility.
+- **Format** — produces a self-contained binary that’s already compact but could shrink further with traditional tools.
 
 ---
 
@@ -134,17 +112,9 @@ When people hear “IR,” they often think of a data format — a static struct
 
 - **Interpretation Rules:** The IR is not opaque — it’s designed to be **decoded and understood across systems**, even if only the core headers (`H1`, `H2`) are recognized. That makes it **forward-compatible**.
 
-- **Convention over Configuration:** CCCP establishes common behaviors — like segment ordering, vendor nesting, or reversible substitutions — so multiple tools can operate on the IR **without bespoke glue logic**.
+- **Convention over Configuration:** CCCP establishes common behaviors — like segment ordering, or reversible substitutions — so multiple tools can operate on the IR **without bespoke glue logic**.
 
-- **APIs and Tooling Support:** The CCCP ecosystem (e.g., `cccp.encode()`, `cccp.luts.fetch()`, etc.) treats IR as a **living object**, not a flat file. You interact with the representation programmatically — enabling automation, analysis, and composition.
-
----
-
-### 🧩 Think of CCCP As...
-
-- A **framework for data interpretation and transformation** — not just a file spec
-- A **domain-agnostic layer** that gives structure and meaning to arbitrary input
-- A **compression-agnostic system** that improves final compression *by structuring the input first*
+- **APIs and Tooling Support:** The CCCP ecosystem treats IR as a **living object**, not a flat file. You interact with the representation programmatically — enabling automation, analysis, and composition.
 
 ---
 
@@ -177,10 +147,9 @@ To enable ecosystem-scale reuse, CCCP proposes a **centralized LUT registry**, s
 
 This registry allows:
 
-- **Named LUT packages** (`ex: Knolbay/Base64Emoji`)
+- **Named LUT packages** (`ex: Knolbay:Base64Emoji@1.0.0`)
 - **Versioning** (`ex: 1.2.3`)
 - **Signatures and validation** to prevent tampering
-- **Declarative fetches** via IR (`fetch: "Knolbay/Package@^1.2.1"`)
 
 #### ✅ Goals:
 - Vendors can publish reusable, structured dictionaries and encodings
@@ -205,19 +174,6 @@ To support this, all LUTs are identified by **hash**, **namespace**, and **versi
 
 ---
 
-### TL;DR
-
-CCCP’s vendor system and LUT registry model offer:
-
-- A modular ecosystem of reusable encodings
-- npm-like fetching of public LUTs
-- De-duplication by design, avoiding LUT spam or bloat
-- Local and private LUT support for offline, proprietary, or secure use cases
-
-Together, these features enable a scalable, composable, and efficient approach to structured compression — from public infrastructure to private pipelines.
-
----
-
 ### 🔒 Local and Private LUTs
 
 While public LUTs enable ecosystem sharing, CCCP also supports **private or local LUTs**, for:
@@ -231,6 +187,19 @@ These LUTs can be:
 - Bundled locally with your application
 - Resolved via a private registry or filesystem
 - Protected via access control (e.g. signed, encrypted, or scoped)
+
+---
+
+### TL;DR
+
+CCCP’s vendor system and LUT registry model offer:
+
+- A modular ecosystem of reusable encodings
+- npm-like fetching of public LUTs
+- De-duplication by design, avoiding LUT spam or bloat
+- Local and private LUT support for offline, proprietary, or secure use cases
+
+Together, these features enable a scalable, composable, and efficient approach to structured compression — from public infrastructure to private pipelines.
 
 ---
 
@@ -260,7 +229,7 @@ Think of it as the **“normal form”** of IR serialization — compact, stable
 
 - ✅ **Canonical from IR → Output**: Once an Intermediate Representation (IR) is finalized, its serialization (to binary or encoded output) is **deterministic, minimal, and unambiguous**. All implementations must produce the same output for the same IR — enabling reproducibility, de-duplication, and hashing.
 
-- 🚫 **Not canonical from Source → IR**: CCCP allows vendors to interpret or encode the same input differently, depending on their LUTs, logic, or domain context. This variability is intentional — canonical packing begins only *after* the IR is defined.
+- 🚫 **Not canonical from Source → IR or IR → IR**: CCCP allows vendors to interpret or encode the same input differently, depending on their LUTs, logic, or domain context. This variability is intentional — canonical packing begins only *after* the IR is defined.
 
 ---
 
@@ -275,14 +244,6 @@ Think of it as the **“normal form”** of IR serialization — compact, stable
 - **LUT Reference Matching:** Canonical form ensures that LUTs are referenced in a consistent, hashable, and deduplicatable way.
 
 - **Transport Optimization:** No redundant keys, padding, or bloat — only what’s necessary, exactly once, and always in the same layout.
-
----
-
-### 🧱 Think of CCCP Canonical Packing As...
-
-- A **formatting contract**: everyone agrees to serialize IR the same way
-- A **cleanroom recipe**: once you pick your ingredients, the packaging is exact
-- A **normal form**: like XML or JSON canonicalization, it guarantees identity across platforms
 
 ---
 
