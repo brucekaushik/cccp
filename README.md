@@ -324,14 +324,10 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
 
 CCCP is experimental and currently under active development. Licensed under MIT.
 
----
+## 🛠 Author
 
-For vendor authorship guides, spec evolution, and examples, see the `spec/` and `examples/` folders. (comming soon)
+Made by Nanduri Srinivas Koushik.
 
-> Have thoughts, ideas, or want to contribute a LUT or encoder? Open an issue or pull request!
-
-## 🛠 Authors & Contributions
-
-Made by Nanduri Srinivas Koushik — contributions and vendors welcome.
+Any thoughts, ideas, opinions and contributions are welcome.
 
 Start compressing with intent, not guesswork.
