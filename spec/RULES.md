@@ -98,3 +98,5 @@ Names may include internal casing or acronyms (e.g., ImagePNG, EncodeTileset)
 
 **Version**: Must follow Semantic Versioning
 - Format: @MAJOR.MINOR.PATCH (e.g., @1.0.0, @2.3.1)
+
+> **Note** on Versioning: CCCP currently uses semantic versioning, but this may change. After further consideration, i believe semantic versioning may not be ideal for CCCP — any change to LUTs, encoder logic, or decoder logic (even bug fixes) can make previously generated IR or binary files undecodable with newer versions. A simpler, single incremental version number may better reflect protocol compatibility.
