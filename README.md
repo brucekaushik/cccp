@@ -307,11 +307,6 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
   * 💭 [Handling of Newline Segments when encoding IR to Binary (**reasoning**)](spec/REASONING.md#handling-of-newline-segments-when-encoding-ir-to-binary)
   * *(more items coming soon)*
 
-- **Decoding from IR to source**
-  * 🛠️ [Segment Decoding Logic (**implementation**)](spec/IMPLEMENTATION.md#segment-decoding-logic-during-ir-decoding)
-  * *(more items coming soon)*
-
-
 ## 🔌 Future Direction
 
 * Formal IR schema validation
