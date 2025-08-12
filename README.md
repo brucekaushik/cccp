@@ -212,7 +212,7 @@ For more details, see the [SFOR](https://github.com/brucekaushik/sfor) repositor
 
 * Binary packing of header tags and bit sequences
 * Suitable for further compression via tools like `gzip`
-* More details might be added to this section later, for now please refer to the PoC.
+* More details might be added to this section later, for now please refer to the [POC](https://github.com/brucekaushik/cccp-python-poc).
 
 ## 🌍 Use Cases
 
