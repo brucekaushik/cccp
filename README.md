@@ -216,7 +216,7 @@ For more details, see the [SFOR](https://github.com/brucekaushik/sfor) repositor
 
 ## 🌍 Use Cases
 
-> Note: The use cases listed below are tentative and need to be re-evaluated and validated through proof-of-concepts (POCs). For now, they represent plausible directions based on current reasoning.
+> Note: The use cases listed below are tentative and need to be re-evaluated and validated through proof-of-concepts (POCs). For now, they represent plausible directions based on current reasoning, generated using AI.
 
 * Text compression (using domain-specific LUTs)
 * Language switching (e.g., `Cccp:DialogTelugu@1.0.0`)
