@@ -321,7 +321,7 @@ CCCP is experimental and currently under active development. Licensed under [MIT
 
 ## 🛠 Author
 
-Made by Nanduri Srinivas Koushik.
+Made by [Nanduri Srinivas Koushik](https://www.linkedin.com/in/brucekaushik/).
 
 Ideas, suggestions, constructive criticism, and contributions are always welcome. Whether it’s proposing improvements, pointing out flaws, or sharing new use cases — your input helps make CCCP better.
 
