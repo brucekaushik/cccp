@@ -317,7 +317,7 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
 
 ## 🛠️ License
 
-CCCP is experimental and currently under active development. Licensed under MIT.
+CCCP is experimental and currently under active development. Licensed under [MIT](LICENSE).
 
 ## 🛠 Author
 
