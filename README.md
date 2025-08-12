@@ -323,6 +323,6 @@ CCCP is experimental and currently under active development. Licensed under MIT.
 
 Made by Nanduri Srinivas Koushik.
 
-Any thoughts, ideas, opinions and contributions are welcome.
+Ideas, suggestions, constructive criticism, and contributions are always welcome. Whether it’s proposing improvements, pointing out flaws, or sharing new use cases — your input helps make CCCP better.
 
 Start compressing with intent, not guesswork.
