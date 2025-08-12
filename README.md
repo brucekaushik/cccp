@@ -218,23 +218,56 @@ For more details, see the [SFOR](https://github.com/brucekaushik/sfor) repositor
 
 > Note: The use cases listed below are tentative and need to be re-evaluated and validated through proof-of-concepts (POCs). For now, they represent plausible directions based on current reasoning, generated using AI.
 
-* Text compression (using domain-specific LUTs)
-* Language switching (e.g., `Cccp:DialogTelugu@1.0.0`)
-* Game assets (e.g., `Knolbay:EncodeTileset@1.0.0`)
-* Embedded devices (sensor logs with shared LUTs)
-* Network protocols (compact domain-specific payloads)
-* Mixed-data archiving with LUT-switching and fallback zones
-* Image compression using vendor-defined functions and tile-based optimization (e.g., `Knolbay:EncodeSpriteMap@2.1.1`)
-* Database compression for structured columns and BLOBs using contextual LUTs (e.g., compressing log types, product names, or language content with `Cccp:DialogLatin@1.0.0`)
-* Archival storage — layer CCCP IR before binary packing for long-term interpretable storage of logs, telemetry, and structured content
-* AI preprocessing pipelines — tokenize and compress multilingual corpora using domain-specific LUTs (e.g., `Cccp:dialogue.telugu@1.0.0`)
-* Code compression and syntax normalization (e.g., LUTs for frequent code patterns like `public static`, `console.log`, etc.)
-* Configuration file templating (replace common config keys/values in JSON, YAML, etc.)
-* Markdown or documentation optimization (tokenize frequent headings or boilerplate formatting)
-* Scientific/log data normalization (e.g., compacting standardized units or event types)
-* Chat history compression or replay (encode speaker tags, emojis, or frequent phrases)
-* Telemetry streams or mobile analytics (minify repeated log events like `button_click`, `page_view`)
-* Compiler or AST preprocessing pipelines (use CCCP IR for token stream transforms)
+### Well-Suited Use Cases
+  * Archival Logging and Audit Trails
+    * Compressing logs, telemetry, and event data with domain or organization-specific encodings, preserving interpretability and supporting future audits or retrieval.
+
+  * Structured Configuration Files and Documents
+    * Encoding vendor-specific or modular configuration files where interpretability, reversibility, and context-aware substitutions (via lookup tables) matter.
+
+  * Domain-Specific Text Compression
+    * Preprocessing and compressing text with domain-optimized LUTs (e.g., medical, legal, financial terms), enabling higher compression and easier domain-level transformation.
+
+  * Multi-language Corpora and Asset Pipelines
+    * Tokenizing and compressing multilingual datasets for NLP/AI, or game/document assets, where vendor LUTs can substitute recurring patterns and objects efficiently.
+
+  * Context-Aware Data Pipelines (ML/AI/ETL)
+    * Standardizing tokenization and encoding for ingestion pipelines, allowing layered transformations and reversible processing—especially when preparing data for machine learning systems.
+
+  * Modular Plugin-Based Compression
+    * Systems needing plugin-driven or vendor-extensible workflows (multi-party logs, composable asset bundles), enabling independent, reversible transformations at different pipeline stages.
+
+  * Long-term Interpretable Storage
+    * Archives requiring compact storage without sacrificing intelligibility or reversibility for future retrieval, migration, or process change.
+
+  * IoT/Embedded Systems with Shared Dictionaries
+    * Devices that reuse compression dictionaries (LUTs) across repeated events, sensor types, or system logs, minimizing transmitted or stored data without losing structure.
+
+### More Cautious/Marginal Use Cases
+  * Database Column Compression
+    * Only where columns are consistently structured and benefit from LUT-driven or tokenized representation (e.g., log types, domain names), not generic blobs.
+
+  * Compiler/AST Preprocessing
+    * CCCP’s pipeline model can support preprocessors for code or syntax, but this is a specialized and advanced use—not mainstream (focus on those needing IR manipulation).
+
+  * Configuration Key/Value Shortening
+    * Where config keys/values repeat across a large fleet and a LUT can shrink common idioms—otherwise, benefit is limited.
+
+### Less Suitable/Best Avoided Use Cases
+  * General Image or Media Compression
+    * Unless vendor-defined functions specifically target format or domain nuances (e.g., sprite maps for games), classic compressors are better.
+
+  * Encryption or High-Entropy Data
+    * CCCP offers little advantage for already-random data or blobs with no recurring structure or domain context.
+
+  * Live/Real-Time Ultra-Low Latency Streams
+    * CCCP is designed for staged, reversible workflows—not for strict real-time, microsecond latency domains.
+
+### Summary of above 3 sub-sections
+  * Domain structure is known and reusable (logs, configs, structured text).
+  * Vendor customization matters (multi-tenant, asset pipelines).
+  * Interpretability or future reversibility is needed (archives, audits).
+  * Context-aware or modular encoding brings measurable benefits (heterogeneous datasets, layered transformations).
 
 ## Specification Index
 
