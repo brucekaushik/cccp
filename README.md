@@ -121,7 +121,7 @@ The encoder processes the input as follows:
 
 ### 📟 **LUT and Metadata**
 
-To produce the encoded payloads for segments 1 (`"01001000"`) and segment 3 (`"11"`), the encoder relies on the following LUT and metadata:
+To produce the encoded payloads for segments 1 (`"01001000"`) and segment 3 (`"0011"`), the encoder relies on the following LUT and metadata:
 
 #### 📂 LUT Metadata
 
