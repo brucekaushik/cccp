@@ -40,7 +40,7 @@ The SDK layer is responsible for ensuring the proper use and handling of H1 segm
 In the current [POC](https://github.com/brucekaushik/cccp-python-poc) implementation, the encoder class:
 
 ```
-cccp/codec/packers/AsciiToJsonIr
+cccp/codec/encoders/AsciiToJsonIr
 ```
 
 automatically emits H1 segments for any text not actively encoded by the vendor.

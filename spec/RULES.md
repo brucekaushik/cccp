@@ -15,7 +15,7 @@ Vendors **must not embed** un-encoded data within the segment payload unless the
 The actual enforcement is handled by the SDK. For example, in the [POC](https://github.com/brucekaushik/cccp-python-poc), the encoder class:
 
 ```
-cccp/codec/packers/AsciiToJsonIr
+cccp/codec/encoders/AsciiToJsonIr
 ```
 
 automatically emits all un-encoded text using the `H1` segment format.
@@ -41,7 +41,7 @@ Vendors **must not embed** line endings within LUT mappings or data segments unl
 The actual enforcement is handled by the SDK. For example, in the [POC](https://github.com/brucekaushik/cccp-python-poc), the encoder class:
 
 ```
-cccp/codec/packers/AsciiToJsonIr
+cccp/codec/encoders/AsciiToJsonIr
 ```
 
 automatically emits all line endings using the `H2` segment format and **prevents vendors from encoding newlines manually**.
