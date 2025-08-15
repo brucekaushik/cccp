@@ -209,6 +209,15 @@ Reducing per-segment overhead is **the SDK's responsibility**, not the vendor en
 * Ensure flexibility for both LUT and non-LUT encodings.
 * Maintain vendor awareness of encoding efficiency without burdening them with low-level bit-packing logic.
 
+# Handling of Exclude segments when encoding IR to Binary
+
+```
+["H1", <PayloadBitlength>, <Payload>]
+```
+
+These segments are encoded using the strategies mentioned [here](#minimizing-the-overhead-caused-by-segments-of-ir-when-encoding-to-binary).
+
+
 # Handling of Newline Segments when encoding IR to Binary
 
 ```
