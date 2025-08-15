@@ -208,3 +208,17 @@ Reducing per-segment overhead is **the SDK's responsibility**, not the vendor en
 * Minimize wasted bits.
 * Ensure flexibility for both LUT and non-LUT encodings.
 * Maintain vendor awareness of encoding efficiency without burdening them with low-level bit-packing logic.
+
+# Handling of Newline Segments when encoding IR to Binary
+
+```
+["H2", <PayloadBitlength>, <Payload>]
+```
+
+Newline segments (`H2`) can be optimized during binary encoding by packing them into **1 byte or less** when mixed-bit packing is used.
+
+* **PayloadBitlength** is unnecessary for binary encoding in this case, as it exists in the IR only for structural consistency with other segments.
+* **Payload** (i.e., the actual newline character(s)) should be included in the binary header so that the exact same character(s) can be restored during decoding.
+* This segment is **self-delimiting**: once the decoder reads the stored newline character(s), it can immediately detect the start of the next segment—whether it's another newline or a completely different type of segment.
+
+> **Note**: For continuous newlines, a new header may be introduced to allow bit-efficient encoding mentioned [here](#minimizing-the-overhead-caused-by-segments-of-ir-when-encoding-to-binary).

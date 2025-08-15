@@ -251,6 +251,7 @@ This section is evolving and may be incomplete. It indexes CCCP protocol documen
 
 - **Encoding from IR to Binary**
   * 💭 [Minimizing the overhead caused by Segments of IR when encoding to Binary (**reasoning**)](spec/REASONING.md#minimizing-the-overhead-caused-by-segments-of-ir-when-encoding-to-binary)
+  * 💭 [Handling of Newline Segments when encoding IR to Binary (**reasoning**)](spec/REASONING.md#handling-of-newline-segments-when-encoding-ir-to-binary)
   * *(more items coming soon)*
 
 - **Decoding from IR to source**
